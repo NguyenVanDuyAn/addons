@@ -1,0 +1,14 @@
+<odoo>
+    <template id="areas_template">
+        <div>
+            <t t-foreach="records" t-as="record">
+                <div>
+                    <h2><t t-esc="record.name"/></h2>
+                    <img t-if="record.image" t-att-src="record.image" alt="Area Image"/>
+                    <p><t t-esc="record.description"/></p>
+                </div>
+            </t>
+        </div>
+    </template>
+  
+</odoo>

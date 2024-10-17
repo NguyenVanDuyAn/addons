@@ -1,0 +1,175 @@
+<odoo>
+    <data>
+
+        <record id="view_area_form" model="ir.ui.view">
+            <field name="name">areas.area.form</field>
+            <field name="model">areas.area</field>
+            <field name="arch" type="xml">
+                <form string="Area">
+                    <header>
+                        <button name="action_go_to_website" type="object" string="Go to Website" class="btn-primary"/>
+                        <button name="action_go_to_google_maps" type="object" string="Go to Google Maps" class="btn-primary"/>
+<button name="set_public" 
+        type="object" 
+        string="Set Public" 
+        groups="areas_in_country.group_areas_manager"/>
+
+                    </header>
+                    <sheet>
+                        <div style="display: flex; justify-content: space-between;">
+                            <!-- Nhóm bên trái (50%) -->
+                            <div style="flex: 1; margin-right: 10px;">
+                                <group>
+                                    <group style="width: 100%;">
+                                        <field name="name" placeholder="Enter Area Name" />
+                                    </group>
+                                    <group>
+                                        <field name="country_id" />
+                                        <field name="district_id" />
+                                    </group>
+                                    <group>
+                                        <field name="province_id" />
+                                        <field name="ward_id" />
+                                    </group>
+                                    
+                                    <group style="width: 100%;">
+                                        <field name="description" placeholder="Enter Description" />
+                                    </group>
+                                    <group style="width: 100%;">
+                                        <field name="location"/>
+                                    </group>
+                                    <group style="width: 100%;">
+                                        <field name="blog_id"></field>
+                                    </group>
+                                    
+                                    <group style="display: flex; justify-content: space-between; width: 100%;">
+                                        <div style="">
+                                            <label style="" for="acreage">Diện tích</label>
+                                            <div style="display: flex; justify-content: flex-start;">
+                                                <field name="acreage" placeholder="Diện tích" style="width: 50%;" />
+                                                <p>ha</p>
+                                            </div>
+                                        </div>
+                                        <div style="">
+                                            <label style=";" for="population">Dân cư</label>
+                                            <div style="display: flex; justify-content: flex-start;">
+                                                <field name="population" placeholder="Dân cư" style="width: 50%;" />
+                                                <p>người</p>
+                                            </div>
+                                        </div>
+                                        <div style="">
+                                            <label style="" for="construction_density">Mật độ xây dựng</label>
+                                            <div style="display: flex; justify-content: flex-start;">
+                                                <field name="construction_density" placeholder="Mật độ xây dựng" style="width: 50%;" />
+                                                <p>%</p>
+                                            </div>
+                                        </div>
+                                    </group>
+
+                                    <group style="width: 100%;">
+                                        <field name="utilities" placeholder="Tiện ích" />
+                                    </group>
+                                </group>
+                            </div>
+
+                            <div style="flex: 1;">
+                                <group>
+                                    <field name="image" widget="image" class="o_wide" style="max-width: 100%;" />
+                                </group>
+                            </div>
+                        </div>
+
+                      
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Tree View -->
+        <record id="view_area_tree" model="ir.ui.view">
+            <field name="name">areas.area.tree</field>
+            <field name="model">areas.area</field>
+            <field name="arch" type="xml">
+                <tree string="Areas" limit="80">
+                <!-- ảnh (avt) -->
+                    <field name="name" />
+                    <field name="country_id" />
+                    <field name="province_id" />
+                    <field name="district_id" />
+                    <field name="ward_id" />
+                    <field name="is_public" />
+                </tree>
+            </field>
+        </record>
+
+        <!-- Kanban View -->
+        <record id="view_area_kanban" model="ir.ui.view">
+            <field name="name">areas.area.kanban</field>
+            <field name="model">areas.area</field>
+            <field name="arch" type="xml">
+                <kanban string="Areas">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click" class="o_kanban_record" style="display: flex; align-items: center;">
+                                <div class="o_kanban_image" style="margin-right: 10px; width: 120px; display: flex; align-items: center; justify-content: center; border: none;">
+                                    <field name="image" widget="image" class="oe_avatar" style="max-width: 100%; max-height: 100%;" />
+                                </div>
+                                <div class="o_kanban_details" style="padding-left: 0; border: none;">
+                                    <strong><field name="name"/></strong>
+                                    <div>Country: <field name="country_id" /></div>
+                                    <div>Province: <field name="province_id" /></div>
+                                    <div>District: <field name="district_id" /></div>
+                                    <div>Ward: <field name="ward_id" /></div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Search View -->
+        <record id="view_area_search" model="ir.ui.view">
+            <field name="name">areas.area.search</field>
+            <field name="model">areas.area</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name" string="Area Name" />
+                    <field name="country_id" string="Country" widget="many2one" options="{'no_open': True}" />
+                    <field name="province_id" string="Province" widget="many2one" options="{'no_open': True}" 
+                        domain="[('country_id', '=', country_id)]"/>
+                    <field name="district_id" string="District" widget="many2one" options="{'no_open': True}" 
+                        domain="[('province_id', '=', province_id)]"/>
+                    <field name="ward_id" string="Ward" widget="many2one" options="{'no_open': True}" 
+                        domain="[('district_id', '=', district_id)]"/>
+
+                    <filter string="By Province" name="filter_province" domain="[('province_id', '!=', False)]"/>
+                    <filter string="By District" name="filter_district" domain="[('district_id', '!=', False)]"/>
+                    <filter string="By Ward" name="filter_ward" domain="[('ward_id', '!=', False)]"/>
+
+                    <filter string="Group By Province" name="group_by_province" context="{'group_by':'province_id'}"/>
+                    <filter string="Group By District" name="group_by_district" context="{'group_by':'district_id'}"/>
+                    <filter string="Group By Ward" name="group_by_ward" context="{'group_by':'ward_id'}"/>
+                </search>
+            </field>
+        </record>
+
+        <!-- Action -->
+        <record id="action_areas" model="ir.actions.act_window">
+            <field name="name">Areas</field>
+            <field name="res_model">areas.area</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="search_view_id" ref="view_area_search"/>
+        </record>
+
+        <!-- Menu Item -->
+           
+        
+        <menuitem id="menu_areas_root" name="Areas"  />
+        <menuitem id="menu_areas" name="Manage Areas" parent="menu_areas_root" action="action_areas"  />
+
+        <!-- Phân Quyền Customer -->
+
+    </data>
+</odoo>

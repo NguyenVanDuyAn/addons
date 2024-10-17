@@ -1,0 +1,10 @@
+<template id="map_template">
+    <t t-call="website.layout">
+        <div class="container">
+            <h1>Map of Locations</h1>
+            <div id="map" style="height: 600px;"></div>
+            <a id="map_link" href="#" target="_blank">Open Map</a>
+            <script type="text/javascript" src="/areas_in_country/static/src/js/map_link.js"></script>
+        </div>
+    </t>
+</template>
