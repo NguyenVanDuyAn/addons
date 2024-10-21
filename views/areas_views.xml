@@ -9,10 +9,7 @@
                     <header>
                         <button name="action_go_to_website" type="object" string="Go to Website" class="btn-primary"/>
                         <button name="action_go_to_google_maps" type="object" string="Go to Google Maps" class="btn-primary"/>
-<button name="set_public" 
-        type="object" 
-        string="Set Public" 
-        groups="areas_in_country.group_areas_manager"/>
+                        <button name="action_public_area" type="object" string="Set Public" class="btn-primary" groups="areas_in_country.group_areas_manager"/>
 
                     </header>
                     <sheet>
@@ -99,6 +96,9 @@
                     <field name="district_id" />
                     <field name="ward_id" />
                     <field name="is_public" />
+                    <field name="write_date" />
+                    <field name="last_public" />
+                    <field name="public_status" />
                 </tree>
             </field>
         </record>
@@ -144,9 +144,12 @@
                     <field name="ward_id" string="Ward" widget="many2one" options="{'no_open': True}" 
                         domain="[('district_id', '=', district_id)]"/>
 
-                    <filter string="By Province" name="filter_province" domain="[('province_id', '!=', False)]"/>
-                    <filter string="By District" name="filter_district" domain="[('district_id', '!=', False)]"/>
-                    <filter string="By Ward" name="filter_ward" domain="[('ward_id', '!=', False)]"/>
+                    <filter string="Public Areas" name="filter_public" domain="[('is_public', '=', True)]"/>
+                    <filter string="Non-Public Areas" name="filter_non_public" domain="[('is_public', '=', False)]"/>
+
+                    <filter string="Mới" name="filter_new" domain="[('public_status', '=', 'new')]"/>
+                    <filter string="Đã sửa" name="filter_edited" domain="[('public_status', '=', 'edited')]"/>
+                    <filter string="Đã duyệt" name="filter_approved" domain="[('public_status', '=', 'approved')]"/>
 
                     <filter string="Group By Province" name="group_by_province" context="{'group_by':'province_id'}"/>
                     <filter string="Group By District" name="group_by_district" context="{'group_by':'district_id'}"/>
