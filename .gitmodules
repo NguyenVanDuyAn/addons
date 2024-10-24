@@ -1,0 +1,6 @@
+[submodule "areas_in_country"]
+	path = areas_in_country
+	url = https://github.com/username/areas_in_country.git
+[submodule "hello_world"]
+	path = hello_world
+	url = https://github.com/username/hello_world.git
